@@ -1,6 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
+// import { Link } from "react-router-dom";
+import Modal from "react-responsive-modal";
+import { connect } from "react-redux";
+import AddChannel from "../AddChannel";
+import { withRouter } from "react-router-dom";
 // Fontawesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,23 +16,61 @@ import {
 import ChannelNavLink from "./ChannelNavLink";
 
 class SideNav extends React.Component {
-  state = { collapsed: false };
+  state = { collapsed: false, open: false };
+  // onComponentDidMount = () => {
+  //   if (!this.props.user) {
+  //     this.setState({ collapsed: true });
+  //   }
+  // };
+  // onComponentDidUpdate = prevProps => {
+  //   if (this.props !== prevProps) {
+  //     this.setState({ collapsed: true });
+  //   }
+  // };
 
+  onOpenModal = () => {
+    this.setState({ open: true });
+  };
+
+  onCloseModal = () => {
+    this.setState({ open: false });
+  };
   render() {
-    const channelLinks = [{ name: "all" }].map(channel => (
+    const channelLinks = this.props.channels.map(channel => (
       <ChannelNavLink key={channel.name} channel={channel} />
     ));
     return (
       <div>
-        <ul className="navbar-nav navbar-sidenav" id="exampleAccordion">
-          <li className="nav-item" data-toggle="tooltip" data-placement="right">
-            <Link className="nav-link heading" to="/createChannel">
-              <span className="nav-link-text mr-2">Channels</span>
-              <FontAwesomeIcon icon={faPlusCircle} />
-            </Link>
-          </li>
-          {channelLinks}
-        </ul>
+        {this.props.user ? (
+          <div>
+            <ul
+              className="navbar-nav navbar-sidenav"
+              style={{ overflow: "auto" }}
+              id="exampleAccordion"
+            >
+              <li
+                className="nav-item"
+                data-toggle="tooltip"
+                data-placement="right"
+              >
+                <div className="nav-link heading" onClick={this.onOpenModal}>
+                  <span className="nav-link-text mr-2">Channels</span>
+                  <FontAwesomeIcon icon={faPlusCircle} />
+                </div>
+                <Modal
+                  open={this.state.open}
+                  onClose={this.onCloseModal}
+                  center
+                >
+                  <AddChannel closeModal={this.onCloseModal} />
+                </Modal>
+              </li>
+              {channelLinks}
+            </ul>
+          </div>
+        ) : (
+          <div />
+        )}
         <ul className="navbar-nav sidenav-toggler">
           <li className="nav-item">
             <span
@@ -51,5 +92,11 @@ class SideNav extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    channels: state.chnls.channels,
+    user: state.auth.user
+  };
+};
 
-export default SideNav;
+export default withRouter(connect(mapStateToProps)(SideNav));

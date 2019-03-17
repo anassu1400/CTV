@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 // Components
 import SideNav from "./SideNav";
 import AuthButton from "./AuthButton";
@@ -9,11 +10,11 @@ class NavBar extends Component {
   render() {
     return (
       <nav
-        className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+        className="navbar navbar-expand-lg navbar-dark  fixed-top"
         id="mainNav"
       >
         <Link className="navbar-brand" to="/welcome">
-          Chatr2.0
+          Chat TV
         </Link>
         <button
           className="navbar-toggler navbar-toggler-right"
@@ -34,5 +35,9 @@ class NavBar extends Component {
     );
   }
 }
-
-export default NavBar;
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user
+  };
+};
+export default withRouter(connect(mapStateToProps)(NavBar));

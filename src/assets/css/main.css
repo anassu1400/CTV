@@ -8,7 +8,9 @@ body {
 }
 
 body.sticky-footer {
-  margin-bottom: 56px;
+  position: absolute;
+  /* margin-bottom: 56px; */
+  width: 100%;
 }
 
 body.sticky-footer .content-wrapper {
@@ -283,7 +285,7 @@ body.fixed-nav {
 }
 
 #mainNav.fixed-top.navbar-dark .sidenav-toggler {
-  background-color: #212529;
+  background-color: #1b231f;
 }
 
 #mainNav.fixed-top.navbar-dark .sidenav-toggler a i {
@@ -492,11 +494,11 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
 
 @media (min-width: 992px) {
   #mainNav.navbar-dark .navbar-collapse .navbar-sidenav {
-    background: #343a40;
+    background: #1b231f;
   }
   #mainNav.navbar-dark .navbar-collapse .navbar-sidenav li.active a {
     color: white !important;
-    background-color: #495057;
+    background-color: #1b231f;
   }
   #mainNav.navbar-dark .navbar-collapse .navbar-sidenav li.active a:focus,
   #mainNav.navbar-dark .navbar-collapse .navbar-sidenav li.active a:hover {
@@ -512,7 +514,7 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
     .navbar-sidenav
     > .nav-item
     .sidenav-third-level {
-    background: #343a40;
+    background: #1b231f;
   }
 }
 
@@ -655,7 +657,7 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
 }
 
 footer.sticky-footer {
-  position: absolute;
+  position: fixed;
   right: 0;
   bottom: 0;
   width: 100%;
