@@ -3,8 +3,9 @@ import * as actionCreators from "../store/actions";
 import Loading from "./Loading";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import scroll from "../assets/js/scroll";
+import scrollf from "../assets/js/scroll";
 import Message from "./Message";
+
 class Messages extends Component {
   state = {
     time: 0,
@@ -13,21 +14,24 @@ class Messages extends Component {
 
   componentDidMount = () => {
     this.startTimer();
-    this.props.onFetchMessages(this.props.match.params.channelID);
+    this.props.onFetchMessages(this.props.match.params.channelID, scrollf);
     this.props.loadMessages();
-    scroll("latestMessage");
   };
   componentDidUpdate = prevProps => {
     if (
       prevProps.match.params.channelID !== this.props.match.params.channelID
     ) {
       clearInterval(this.timer);
-      this.props.onFetchMessages(this.props.match.params.channelID);
+      actionCreators.clearTS();
+      actionCreators.clearMsgs();
       this.props.loadMessages();
-      scroll("latestMessage");
+      this.props.onFetchMessages(this.props.match.params.channelID, scrollf);
+
+      this.resetTimer();
       this.startTimer();
     }
   };
+
   startTimer = () => {
     this.setState({
       time: this.state.time,
@@ -37,36 +41,47 @@ class Messages extends Component {
       this.setState({
         time: Date.now() - this.state.start
       });
-      if (Math.floor(this.state.time / 1000) % 2 === 0) {
-        this.props.onFetchMessages(this.props.match.params.channelID);
-        scroll("latestMessage");
-      }
-    }, 1000);
+      this.props.onFetchMessages(this.props.match.params.channelID, scrollf);
+    }, 5000);
   };
+
   componentWillUnmount = () => {
     clearInterval(this.timer);
+    actionCreators.clearTS();
+    actionCreators.clearMsgs();
   };
+
   resetTimer = () => {
     this.setState({ time: 0 });
   };
 
   getView = () => {
-    const messages = this.props.messages.map(msg => <Message message={msg} />);
-    let latest = {};
-    if (messages.length) {
-      latest = messages[messages.length - 1];
-    }
+    // const type = this.props.value;
+    let messages = [];
+
+    messages = this.props.messages.map(msg =>
+      msg.username ? (
+        <Message
+          type={msg.type}
+          key={msg.id}
+          username={msg.username}
+          message={msg.message}
+        />
+      ) : (
+        <></>
+      )
+    );
+
+    // let latest = {};
 
     if (this.props.loading) {
       return <Loading />;
     } else {
-      return messages.length && latest ? (
-        <div>
-          <ul className="messagesStyle pre-scrollable">
-            {messages.slice(0, messages.length - 1)}
-            <li className="messageStyle" id="latestMessage">
-              {latest.props.children}
-            </li>
+      return messages.length ? (
+        <div className="messagesStyle">
+          <ul className="pre-scrollable">
+            {messages}
+            <div id="latestMessage" />
             <li />
           </ul>
         </div>
@@ -89,8 +104,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchMessages: channelID =>
-      dispatch(actionCreators.fetch_messages(channelID)),
+    onFetchMessages: (channelID, scroll) =>
+      dispatch(actionCreators.fetch_messages(channelID, scroll)),
     loadMessages: () => dispatch(actionCreators.loading())
   };
 };

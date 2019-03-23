@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-// import { setErrors } from "./errors";
+import { setErrors } from "./errors";
 import axios from "axios";
 const instance = axios.create({
   baseURL: "https://api-chatr.herokuapp.com"
@@ -15,7 +15,8 @@ export const fetch_channels = () => {
         payload: channels
       });
     } catch (error) {
-      console.error(error);
+      dispatch(setErrors(error.response.data));
+      // console.error(error);
     }
   };
 };
@@ -25,13 +26,14 @@ export const add_channel = (name, closeModal) => {
     try {
       const res = await instance.post("/channels/create/", name);
       const channel = res.data;
+      closeModal();
       dispatch({
         type: actionTypes.ADD_CHANNEL,
         payload: channel
       });
-      closeModal();
     } catch (error) {
-      console.error(error);
+      dispatch(setErrors(error.response.data));
+      // console.error(error);
     }
   };
 };

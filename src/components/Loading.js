@@ -3,9 +3,11 @@ import React, { Component } from "react";
 class Loading extends Component {
   render() {
     return (
-      <div className="noiseContain">
-        <div />
-      </div>
+      <img
+        src={require("../assets/images/loadin.png")}
+        className="loadContain"
+        alt="loading"
+      />
     );
   }
 }

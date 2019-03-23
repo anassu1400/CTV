@@ -6,7 +6,8 @@ import * as actionCreators from "../store/actions";
 
 class AddChannel extends Component {
   state = {
-    name: ""
+    name: "",
+    image_url: ""
   };
   submitChannel = event => {
     event.preventDefault();
@@ -27,6 +28,18 @@ class AddChannel extends Component {
             type="text"
             className="form-control"
             name="name"
+            onChange={this.handleChange}
+          />
+        </div>
+
+        <div className="input-group mb-3">
+          <div className="input-group-prepend">
+            <span className="input-group-text">Image URL</span>
+          </div>
+          <input
+            type="text"
+            className="form-control"
+            name="image_url"
             onChange={this.handleChange}
           />
         </div>

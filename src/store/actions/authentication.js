@@ -39,11 +39,12 @@ export const login = (userData, history) => {
     try {
       let response = await instance.post("/login/", userData);
       let token = response.data.token;
+      dispatch(setErrors([]));
       dispatch(setAuthToken(token));
       history.replace("/");
     } catch (error) {
-      console.error("My Error ", error);
-      dispatch(setErrors(error));
+      // console.error("My Error ", error);
+      dispatch(setErrors(error.response.data));
     }
   };
 };
@@ -53,16 +54,18 @@ export const signup = (userData, history) => {
     try {
       let response = await instance.post("/signup/", userData);
       let token = response.data.token;
+      dispatch(setErrors([]));
       dispatch(login(token));
       history.replace("/");
     } catch (error) {
-      console.error(error);
-      dispatch(setErrors(error));
+      // console.error(error);
+      dispatch(setErrors(error.response.data));
     }
   };
 };
 
 export const logout = () => setAuthToken();
+
 const setCurrentUser = user => ({
   type: actionTypes.SET_CURRENT_USER,
   payload: user

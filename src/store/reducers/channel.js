@@ -10,9 +10,10 @@ const reducer = (state = initialState, action) => {
     case actionTypes.FETCH_MESSAGES:
       return {
         ...state,
-        messages: action.payload,
+        messages: state.messages.concat(action.payload),
         loading: false
       };
+
     case actionTypes.SEND_MESSAGE:
       return {
         ...state,

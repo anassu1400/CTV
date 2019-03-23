@@ -5,3 +5,4 @@ export const FETCH_MESSAGES = "FETCH_MESSAGES";
 export const ADD_CHANNEL = "ADD_CHANNEL";
 export const SEND_MESSAGE = "SEND_MESSAGE";
 export const SET_MESSAGES_LOADING = "SET_MESSAGES_LOADING";
+// export const FETCH_LATEST = "FETCH_LATEST";
