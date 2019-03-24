@@ -42,15 +42,12 @@ class ChannelsList extends Component {
     return (
       <div style={{ zIndex: "2004" }}>
         <ul>{channelLinks}</ul>
-        <table style={{ marginRight: "49%", marginLeft: "49%" }}>
+        <table style={{ marginRight: "0%", marginLeft: "32%" }}>
           <thead>
             <tr>
               {this.state.page !== 1 ? (
                 <td>
-                  <button
-                    style={{ background: "green" }}
-                    onClick={this.moveDownPage}
-                  >
+                  <button className="buttns" onClick={this.moveDownPage}>
                     prev
                   </button>
                 </td>
@@ -60,10 +57,7 @@ class ChannelsList extends Component {
               {this.state.page <=
               Math.round(this.props.channels.length / 10) ? (
                 <td>
-                  <button
-                    style={{ background: "green" }}
-                    onClick={this.moveUpPage}
-                  >
+                  <button className="buttns" onClick={this.moveUpPage}>
                     next
                   </button>
                 </td>

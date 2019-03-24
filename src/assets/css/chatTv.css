@@ -5,7 +5,13 @@
   /* text-align: justify; */
   word-break: break-all;
 }
-
+.buttns {
+  background-color: green;
+  animation: glowbox 1s ease-in-out infinite alternate;
+  border-radius: 40px;
+  margin-right: 50px;
+  margin-left: 100px;
+}
 @keyframes glow {
   from {
     text-shadow: 0 0 5px black, 0 0 10px black, 0 0 15px rgba(0, 255, 0, 0.3),
@@ -19,7 +25,19 @@
       0 0 40px rgba(0, 255, 0, 0.4);
   }
 }
-
+@keyframes glowbox {
+  from {
+    box-shadow: 0 0 5px black, 0 0 10px black, 0 0 15px rgba(0, 255, 0, 0.3),
+      0 0 20px rgba(0, 255, 0, 0.3), 0 0 25px rgba(0, 255, 0, 0.3),
+      0 0 30px rgba(0, 255, 0, 0.3), 0 0 35px rgba(0, 255, 0, 0.3);
+  }
+  to {
+    box-shadow: 0 0 10px black, 0 0 15px rgba(0, 255, 0, 0.4),
+      0 0 20px rgba(0, 255, 0, 0.4), 0 0 25px rgba(0, 255, 0, 0.4),
+      0 0 30px rgba(0, 255, 0, 0.4), 0 0 35px rgba(0, 255, 0, 0.4),
+      0 0 40px rgba(0, 255, 0, 0.4);
+  }
+}
 .messagesStyle {
   animation: glow 1s ease-in-out infinite alternate;
   height: 87%;
