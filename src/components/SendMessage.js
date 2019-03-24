@@ -121,14 +121,14 @@ class SendMessage extends Component {
             />
           </div>
 
-          <input type="submit" />
+          <input type="submit" style={{ background: "green" }} />
 
-          <button onClick={this.toggleListen}>
+          <button style={{ background: "green" }} onClick={this.toggleListen}>
             <FontAwesomeIcon icon={faMicrophone} />
           </button>
         </form>
         <div>
-          <button onClick={this.onOpenModal}>
+          <button style={{ background: "green" }} onClick={this.onOpenModal}>
             <span>Images</span>
           </button>
           <Modal open={this.state.open} onClose={this.onCloseModal} center>

@@ -433,7 +433,7 @@ span:hover > p {
     rgba(200, 200, 255, 0.5),
     rgba(0, 0, 0, 0)
   );
-  animation: scan 2s infinite alternate;
+  animation: scan 2s infinite;
 }
 @keyframes scan {
   0% {
