@@ -20,14 +20,16 @@ export const clearTS = () => {
 };
 
 export let msgs = [];
+
 export const clearMsgs = () => {
-  // console.log("messges", msgs);
-  msgs = [];
-  // console.log("clearing messages ", msgs);
+  console.log("clearing messages....");
+  return {
+    type: actionTypes.CLEAR_MESSAGES
+  };
 };
 
 export const fetch_messages = (channelID, scroll) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       const res = await instance.get(
         `/channels/${channelID}/?latest=${prevTimeStamp}`
@@ -39,8 +41,13 @@ export const fetch_messages = (channelID, scroll) => {
         prevTimeStamp = messages[messages.length - 1].timestamp;
         // console.log("hey ", prevTimeStamp);
       }
-
-      if (!messages.some(msg => !!msgs.find(mg => mg.id === msg.id))) {
+      console.log("msgs from ballll ", getState().chnl.messages);
+      if (
+        !messages.some(
+          msg => !!getState().chnl.messages.find(mg => mg.id === msg.id)
+        )
+      ) {
+        console.log("this fonud smth ");
         dispatch({
           type: actionTypes.FETCH_MESSAGES,
           payload: messages.map(msg =>
@@ -53,7 +60,6 @@ export const fetch_messages = (channelID, scroll) => {
               : { ...msg, type: "message" }
           )
         });
-        msgs.push(messages);
         scroll("latestMessage");
       }
     } catch (error) {

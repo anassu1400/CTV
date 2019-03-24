@@ -1,8 +1,15 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import * as actionCreators from "../store/actions";
 import ChannelList from "./ChannelsList";
 class Welcome extends Component {
+  componentDidMount = () => {
+    actionCreators.clearMsgs();
+  };
+  componentWillUnmount = () => {
+    console.log("moved");
+  };
   render() {
     return (
       <div className="welcomePage">

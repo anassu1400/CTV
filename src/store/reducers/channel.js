@@ -1,6 +1,6 @@
 import * as actionTypes from "../actions/actionTypes";
 
-const initialState = {
+export const initialState = {
   messages: [],
   loading: true
 };
@@ -24,6 +24,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true
+      };
+    case actionTypes.CLEAR_MESSAGES:
+      return {
+        ...state,
+        messages: []
       };
     default:
       return state;

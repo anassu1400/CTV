@@ -14,6 +14,7 @@ class Messages extends Component {
 
   componentDidMount = () => {
     this.startTimer();
+    this.props.clearMSG();
     this.props.onFetchMessages(this.props.match.params.channelID, scrollf);
     this.props.loadMessages();
   };
@@ -23,10 +24,9 @@ class Messages extends Component {
     ) {
       clearInterval(this.timer);
       actionCreators.clearTS();
-      actionCreators.clearMsgs();
+      this.props.clearMSG();
       this.props.loadMessages();
       this.props.onFetchMessages(this.props.match.params.channelID, scrollf);
-
       this.resetTimer();
       this.startTimer();
     }
@@ -46,9 +46,10 @@ class Messages extends Component {
   };
 
   componentWillUnmount = () => {
+    console.log("here");
     clearInterval(this.timer);
     actionCreators.clearTS();
-    actionCreators.clearMsgs();
+    this.props.clearMSG();
   };
 
   resetTimer = () => {
@@ -106,7 +107,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onFetchMessages: (channelID, scroll) =>
       dispatch(actionCreators.fetch_messages(channelID, scroll)),
-    loadMessages: () => dispatch(actionCreators.loading())
+    loadMessages: () => dispatch(actionCreators.loading()),
+    clearMSG: () => dispatch(actionCreators.clearMsgs())
   };
 };
 
